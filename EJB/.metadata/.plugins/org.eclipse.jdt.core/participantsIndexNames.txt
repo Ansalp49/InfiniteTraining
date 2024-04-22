@@ -1,0 +1,3 @@
+INDEX VERSION 1.134
+D:\Practice\EJB\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2755657411.index
+\PharmacyClient\src\main\java

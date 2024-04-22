@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:EjbHelloWorld" serverId="WildFly 9.x"/>
+  <module moduleId="org.eclipse.jst.jee.server:PharmacyClient" serverId="WildFly 9.x"/>
+  <module moduleId="org.eclipse.jst.jee.server:ArithmeticServer" serverId="WildFly 9.x"/>
+  <module moduleId="org.eclipse.jst.jee.server:EjbCalculation" serverId="WildFly 9.x"/>
+  <module moduleId="org.eclipse.jst.jee.server:PharmacyServer" serverId="WildFly 9.x"/>
+</modules>
