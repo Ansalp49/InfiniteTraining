@@ -1,0 +1,298 @@
+@charset "ISO-8859-1";
+ 
+ 
+.myDatePickerStyles .ui-datepicker {
+    text-align: center;
+}
+ 
+.myDatePickerStyles .ui-datepicker-trigger {
+    margin: 0 0 0 5px;
+    vertical-align: text-top;
+}
+ 
+.myDatePickerStyles .ui-datepicker {
+    font-family: Open Sans, Arial, sans-serif;
+    margin-top: 2px;
+    padding: 0 !important;
+    border-color: #c9f0f5 !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker {
+    width: 256px;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker {
+    width: 191px;
+}
+ 
+.myDatePickerStyles .ui-datepicker table {
+    width: 256px;
+    table-layout: fixed;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker table {
+    width: 191px;
+    table-layout: fixed;
+}
+ 
+.myDatePickerStyles .ui-datepicker-header {
+    background-color: #3e9aba !important;
+    background-image: none !important;
+    border-radius: 0;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-header {
+    background-color: #e6f7f9 !important;
+    border-width: 1px;
+    border-color: #c9f0f5;
+    border-style: solid;
+}
+ 
+.myDatePickerStyles .ui-datepicker-title {
+    line-height: 35px !important;
+    margin: 0 10px !important;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-title {
+    line-height: 20px !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker-prev span {
+    display: none !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker-next {
+    text-align: center;
+}
+ 
+.myDatePickerStyles .ui-datepicker-next span {
+    display: none !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker-prev {
+    background-color: transparent !important;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAMCAYAAACulacQAAAAUklEQVQYlXWPwQnAMAwDj9IBOlpH8CjdJLNksuujFIJjC/w6WUioFBcqJ7sGEAD5Y/hpqLRghRv4YQlUjqXI3Kql2MixraGbEhVcDXcFUR/1egEHNuTBpFW0NgAAAABJRU5ErkJggg==') !important;
+    height: 12px !important;
+    width: 7px !important;
+    margin: 14px 12px;
+    display: inline-block;
+    left: 0 !important;
+    top: 0 !important;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-prev {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAOCAYAAAD9lDaoAAAAuUlEQVQokXXRsUtCYRAA8J8pDQ1CVIgIgtBU2NDiZIuDS4uLf6WDS1O0tLREEE8icBNKS3lTs8/B78XHw3dwcHA/juOuqjzucYJVrQQMcYctvo4OgEFIeMK6iPphCjzjEWLUC3vACx7yRo5uMUIFr5gii1EL41AvMIkBVPGH04DrSLEsIvjEOZq4wi9+iijDR0ANXOMbmxjlcIY2LtANO6YxymGCDs5wg/ciYv+KBJeY4+2A+Y9j4Y47RtUkrNXeDxUAAAAASUVORK5CYII=') !important;
+    height: 14px !important;
+    width: 9px !important;
+    margin: 5px !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker-next {
+    cursor: pointer;
+}
+ 
+.myDatePickerStyles .ui-datepicker-prev {
+    cursor: pointer;
+}
+ 
+.myDatePickerStyles .ui-datepicker-next {
+    background-color: transparent !important;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAVUlEQVQYlXWQ0Q3AIAhEL07gKI7kKN2kI3Wk1w9to3KQEELucQEECOizhhTQGHFnwOdgobWx0GkZILfYBhXl0STVbPoBarbkL7ozN/F8VBBXh8uJgF5r2hrI4GHUkAAAAABJRU5ErkJggg==') !important;
+    height: 12px !important;
+    width: 8px !important;
+    margin: 14px 12px;
+    display: inline-block;
+    right: 0 !important;
+    top: 0 !important;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-next {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAOCAYAAAASVl2WAAAAtElEQVQYlXXQsUpCcRQH4I97EQyHa1pgIEE0hBGYL+BjNLRFjxXh4rM4F21BS4S4FAgqQioOngt/RM/6+zi/w4EanlA4MDkecYsO3vG/D8a4Rx03eMMqBQt8oodTXAdalwBm+IpNDVxG3aYEMMU3ujjDBT5SAH9R2cE58mwPFOgneJSCGp7RjLoXTEtQjbCFOV7xCxkqdp9sYxnhpFyb4QFXdh8c4Cc9Ko++OwzjFwfn5FiwBVeuI/K2UCkSAAAAAElFTkSuQmCC') !important;
+    height: 14px !important;
+    width: 8px !important;
+    margin: 5px;
+}
+ 
+.myDatePickerStyles .ui-datepicker-month {
+    border-radius: 2px;
+    background-color: #3985a0;
+    width: 110px !important;
+    height: 22px;
+    font-family: Open Sans !important;
+    color: #fff;
+    font-size: 14px !important;
+    font-weight: 600;
+    text-align: left;
+    border: none !important;
+    margin-right: 17px !important;
+    vertical-align: text-top;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-month {
+    font-family: Open Sans, Arial, sans-serif;
+    color: rgba(34, 34, 34, 0.87);
+    font-size: 12px !important;
+    font-weight: 700;
+    text-align: center;
+    transform: scaleX(1.0029)
+}
+ 
+.myDatePickerStyles .ui-datepicker-year {
+    border-radius: 2px;
+    background-color: #3985a0;
+    width: 61px !important;
+    height: 22px;
+    border: none !important;
+    font-family: Open Sans !important;
+    color: #fff;
+    font-size: 14px !important;
+    font-weight: 600;
+    text-align: left;
+    vertical-align: text-top;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-year {
+    font-family: Open Sans, Arial, sans-serif;
+    color: rgba(34, 34, 34, 0.87);
+    font-size: 12px !important;
+    font-weight: 700;
+    text-align: center;
+    transform: scaleX(1.0029)
+}
+ 
+.myDatePickerStyles .ui-datepicker-month option,
+.myDatePickerStyles .ui-datepicker-year option {
+    color: #3985a0 !important;
+    background-color: #fff !important;
+    font-family: Open Sans !important;
+    font-size: 14px !important;
+    font-weight: 600;
+}
+ 
+.myDatePickerStyles .ui-datepicker-month option[selected],
+.myDatePickerStyles .ui-datepicker-year option[selected] {
+    background-color: #e5edf0 !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker .ui-state-hover {
+    /*background: none !important;*/
+    border: 0 !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker td {
+    vertical-align: top;
+}
+ 
+.myDatePickerStyles .ui-datepicker .ui-state-default {
+    border-radius: 2px;
+    border-color: #edebeb !important;
+/*     background: white !important; */
+    width: 24px;
+    height: 24px;
+    padding: 0 !important;
+    line-height: 24px;
+    text-align: center !important;
+    font-family: Open Sans, Arial, sans-serif;
+    color: #707070;
+    font-size: 13px;
+    font-weight: 400 !important;
+    margin: 7px 0 0 4px;
+}
+ 
+.myDatePickerStyles .ui-datepicker .ui-state-default.ui-state-highlight{
+    border-color: #dcdcdc;
+    background-color: #cff3f8 !important;
+    color: #3e9aba !important;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-state-default {
+    font-size: 10px;
+    margin: 0;
+}
+ 
+.myDatePickerStyles .ui-datepicker td {
+    width: 33px;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker td {
+    width: 26px;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-state-default {
+    width: 26px;
+    height: 20px;
+    line-height: 20px;
+}
+.myDatePickerStyles .ui-state-default.ui-state-hover {
+    border-color: #dcdcdc;
+    background-color: #cff3f8 !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker .ui-state-active {
+    border-color: #dcdcdc;
+    background-color: #cff3f8 !important;
+    color: #3e9aba !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker-calendar thead tr th {
+    font-family: Open Sans, Arial, sans-serif;
+    color: #549fa8;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0.45em 0.3em !important;
+    /*   width: 15px !important; */
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-calendar thead tr th {
+    font-size: 10px;
+}
+ 
+.myDatePickerStyles .ui-datepicker-close {
+    display: none;
+}
+ 
+.myDatePickerStyles .ui-datepicker thead {
+    background-color: #f5f5f5;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker thead {
+    background: none;
+}
+ 
+.myDatePickerStyles .ui-state-default.ui-datepicker-current {
+    float: none !important;
+    font-family: Open Sans, Arial, sans-serif;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    border-width: 0 !important;
+    border: none;
+    vertical-align: top;
+    margin: 0 !important;
+    background-color: transparent !important;
+}
+ 
+.myDatePickerStyles .ui-datepicker-buttonpane.ui-widget-content {
+    text-align: center;
+    background-color: #3e9aba;
+    margin: 0 !important;
+    height: 28px;
+    padding: 0 !important;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-year {
+    background-color: transparent;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-month {
+    background-color: transparent;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-state-default {
+    border: 0 !important;
+}
+ 
+.myDatePickerStyles .openemr-calendar .ui-datepicker-month {
+    margin-right: 10px !important;
+}

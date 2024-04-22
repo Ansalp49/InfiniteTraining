@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\Users\ansalp\Downloads\Pharmacy\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1128451981.index
+3615258747.index
+1993171180.index
+1612646630.index
+2105594595.index
+3897458956.index

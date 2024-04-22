@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Nov 5, 2023, 5:42:09 PM by Hibernate Tools 3.6.2.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="com.java.ejb.MedicineSales" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="MEDICINESALES">
+        <id name="saleId" type="java.lang.String">
+            <column name="SALEID"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="medId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="MEDID"/>
+        </property>
+        <property generated="never" lazy="false" name="pharmId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PHARM_ID"/>
+        </property>
+        <property generated="never" lazy="false" name="entryId" optimistic-lock="true" type="int" unique="false">
+            <column name="ENTRYID"/>
+        </property>
+        <property generated="never" lazy="false" name="medName" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="MEDNAME"/>
+        </property>
+        <property generated="never" lazy="false" name="saleDate" optimistic-lock="true" type="java.util.Date" unique="false">
+            <column name="SALEDATE"/>
+        </property>
+        <property generated="never" lazy="false" name="quantity" optimistic-lock="true" type="int" unique="false">
+            <column name="QUANTITY"/>
+        </property>
+        <property generated="never" lazy="false" name="price" optimistic-lock="true" type="double" unique="false">
+            <column name="PRICE"/>
+        </property>
+        <property generated="never" lazy="false" name="totalPrice" optimistic-lock="true" type="double" unique="false">
+            <column name="TOTALPRICE"/>
+        </property>
+        <property generated="never" lazy="false" name="providerId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PROVIDERID"/>
+        </property>
+        <property generated="never" lazy="false" name="recipientId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="UHID"/>
+        </property>
+        <property generated="never" lazy="false" name="prescriptionId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="prescription_Id"/>
+        </property>
+    </class>
+</hibernate-mapping>

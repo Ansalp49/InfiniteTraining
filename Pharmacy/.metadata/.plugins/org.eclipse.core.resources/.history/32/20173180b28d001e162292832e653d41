@@ -1,0 +1,242 @@
+package com.java.ejb;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.naming.NamingException;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+
+public class ControllerEjb {
+
+	private PharmacyImpl impl;
+	private MedicineEntry entries;
+	private MedicineSales sale;
+
+	public PharmacyImpl getImpl() {
+		return impl;
+	}
+
+	public void setImpl(PharmacyImpl impl) {
+		this.impl = impl;
+	}
+
+	public MedicineEntry getEntries() {
+		return entries;
+	}
+
+	public void setEntries(MedicineEntry entries) {
+		this.entries = entries;
+	}
+
+	public MedicineSales getSale() {
+		return sale;
+	}
+
+	public void setSale(MedicineSales sale) {
+		this.sale = sale;
+	}
+
+	public String addMedicine(MedicineEntry entries) throws NamingException {
+		System.out.println("Hitted Entry Controller....");
+		if (medValid(entries)) {
+			return impl.addMedicineEjb(entries);
+		}
+		return "";
+	}
+
+	public String addSaleRecord(MedicineSales sale) throws NamingException {
+		System.out.println("Hitted Sale Controller...");
+		if (saleValid(sale)) {
+			return impl.addSaleHistoryEjb(sale);
+		}
+		return "";
+	}
+
+	public boolean medValid(MedicineEntry entries) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		String medIdRegex = ".{4}$";
+		String medNameRegex = "^.+$";
+		Date today = new Date();
+		System.out.println(entries.getMedId());
+		boolean flag = true;
+
+		if (entries.getMedId() == null) {
+			System.out.println("err");
+			context.addMessage("form:medId", new FacesMessage("Please enter Id."));
+			flag = false;
+		}
+
+		if (!Pattern.matches(medNameRegex, entries.getMedName())) {
+			context.addMessage("form:medName", new FacesMessage("Please enter Medicine Name."));
+			flag = false;
+		}
+
+		if (!Pattern.matches(medIdRegex, entries.getMedId())) {
+			context.addMessage("form:medId", new FacesMessage("Invalid Id format."));
+			flag = false;
+		}
+
+		// Check if medId already exists in the database
+		if (isMedIdAlreadyExists(entries.getMedId())) {
+			context.addMessage("form:medId", new FacesMessage("MedId already exists."));
+			flag = false;
+		}
+
+		// Check if medName already exists in the database
+		if (isMedNameAlreadyExists(entries.getMedName())) {
+			context.addMessage("form:medName", new FacesMessage("MedName already exists."));
+			flag = false;
+		}
+
+		Date mfgDate = entries.getMfgDate();
+		Date expDate = entries.getExpiryDate();
+
+		if (mfgDate == null) {
+			context.addMessage("form:mfgDate", new FacesMessage("Please enter Mfg Date."));
+			flag = false;
+		}
+
+		if (mfgDate == null || mfgDate.after(today)) {
+			context.addMessage("form:mfgDate", new FacesMessage("MfgDate cannot be in the future."));
+			flag = false;
+		}
+
+		if (expDate == null) {
+			context.addMessage("form:expiryDate", new FacesMessage("Please enter Expiry Date."));
+			flag = false;
+		}
+
+		if (expDate == null || expDate.before(mfgDate) || expDate.equals(today)) {
+			context.addMessage("form:expiryDate", new FacesMessage("ExpDate cannot be before MfgDate or today."));
+			flag = false;
+		}
+
+		if (entries.getPrice() <= 0) {
+			context.addMessage("form:price", new FacesMessage("Invalid Price amount."));
+			flag = false;
+		}
+
+		if (entries.getQuantity() < 5) {
+			context.addMessage("form:quantity", new FacesMessage("Quantity must be at least 5."));
+			flag = false;
+		}
+
+		// Additional Validation: Check if the expiry date is within 1 month\
+		Calendar oneMonthAhead = Calendar.getInstance();
+		oneMonthAhead.add(Calendar.MONTH, 1);
+
+		if (expDate == null || expDate.before(oneMonthAhead.getTime())) {
+			context.addMessage("form:expiryDate", new FacesMessage("ExpDate must be at least 1 month ahead for sale."));
+			flag = false;
+		}
+
+		return flag;
+	}
+
+	public boolean saleValid(MedicineSales sale) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String providerIdRegex = "PROV.{3}$"; // Provider ID must start with "PROV" and have a total length of 7
+		String recipentIdRegex = "IN.{4}$"; // Recipient ID must start with "IN" and have a total length of 6
+		String prescriptionIdRegex = "P\\d+$"; // Prescription ID must start with "P"
+		boolean flag = true;
+
+		if (sale.getProviderId().trim().length() == 0) {
+			context.addMessage("form:providerId", new FacesMessage("Please enter Provider Id."));
+			flag = false;
+		} else {
+			if (!Pattern.matches(providerIdRegex, sale.getProviderId())) {
+				context.addMessage("form:providerId",
+						new FacesMessage("Provider ID must start with 'PROV' and be 7 characters."));
+				flag = false;
+			}
+		}
+
+		if (sale.getPatientId().trim().length() == 0) {
+			context.addMessage("form:recipientId", new FacesMessage("Please enter Recipient ID."));
+			flag = false;
+		} else {
+			if (!Pattern.matches(recipentIdRegex, sale.getPatientId())) {
+				context.addMessage("form:recipientId",
+						new FacesMessage("Recipient ID must start with 'IN' and be 6 characters."));
+				flag = false;
+			}
+
+		}
+
+		if (sale.getPresId().trim().length() == 0) {
+			context.addMessage("form:prescriptionId", new FacesMessage("Please enter Prescription ID."));
+			flag = false;
+		} else {
+			if (!Pattern.matches(prescriptionIdRegex, sale.getPresId())) {
+				context.addMessage("form:prescriptionId", new FacesMessage("Prescription ID must start with 'P'."));
+				flag = false;
+			}
+		}
+
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+		int demandQuantity = sale.getQuantity();
+		int entryId = (int) sessionMap.get("entryId");
+		MedicineEntry medEntry = searchMedicine(entryId);
+
+		if (entries.getQuantity().trim().length() == 0) {
+			context.addMessage("form:quantity", new FacesMessage("Please enter quantity."));
+			flag = false;
+		} else {
+			if (demandQuantity < 0) {
+				context.addMessage("form:quantity", new FacesMessage("Quantity must be non-negative."));
+				flag = false;
+			}
+			if (demandQuantity > medEntry.getQuantity()) {
+				context.addMessage("form:quantity", new FacesMessage("Invalid quantity for sale."));
+				flag = false;
+			}
+		}
+
+		return flag;
+	}
+
+	public MedicineEntry searchMedicine(int entryId) {
+		SessionFactory sf = SessionHelper.getConnection();
+		Session session = sf.openSession();
+		Criteria cr = session.createCriteria(MedicineEntry.class);
+		cr.add(Restrictions.eqOrIsNull("entryId", entryId));
+		MedicineEntry quan = (MedicineEntry) cr.uniqueResult();
+		System.out.println("entry2:" + entryId);
+		return quan;
+	}
+
+	public boolean isMedIdAlreadyExists(String medId) {
+		SessionFactory sf = SessionHelper.getConnection();
+		Session session = sf.openSession();
+		Criteria criteria = session.createCriteria(MedicineEntry.class);
+		criteria.add(Restrictions.eq("medId", medId));
+		criteria.setProjection(Projections.rowCount());
+		Long count = (Long) criteria.uniqueResult();
+		return count != null && count > 0;
+	}
+
+	public boolean isMedNameAlreadyExists(String medName) {
+		SessionFactory sf = SessionHelper.getConnection();
+		Session session = sf.openSession();
+		Criteria criteria = session.createCriteria(MedicineEntry.class);
+		criteria.add(Restrictions.eq("medName", medName));
+		criteria.setProjection(Projections.rowCount());
+
+		Long count = (Long) criteria.uniqueResult();
+		return count != null && count > 0;
+	}
+}

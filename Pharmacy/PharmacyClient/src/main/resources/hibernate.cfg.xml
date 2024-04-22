@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">ansalp49</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pharmacy</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+	<mapping resource="com/java/ejb/MedicineEntry.hbm.xml" />
+	<mapping resource="com/java/ejb/MedicineSales.hbm.xml" />
+	<mapping resource="com/java/ejb/Prescription.hbm.xml" />
+	<mapping resource="com/java/ejb/PharmacyEnroll.hbm.xml" />
+	<mapping resource="com/java/ejb/ProviderDetails.hbm.xml" />
+	<mapping resource="com/java/ejb/PharmacyLogin.hbm.xml" />
+	<mapping resource="com/java/ejb/RecipientDetails.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

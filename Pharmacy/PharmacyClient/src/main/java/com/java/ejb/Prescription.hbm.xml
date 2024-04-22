@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Dec 5, 2023, 6:25:06 AM by Hibernate Tools 3.6.2.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="com.java.ejb.Prescription" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="PRESCRIPTION">
+        <id name="prescriptionId" type="java.lang.String">
+            <column name="PRESCRIPTION_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="appointmentId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="APPOINTMENTID"/>
+        </property>
+        <property generated="never" lazy="false" name="providerid" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PROVIDERID"/>
+        </property>
+        <property generated="never" lazy="false" name="recipentId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="UHID"/>
+        </property>
+        <property generated="never" lazy="false" name="symptoms" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="SYMPTOMS"/>
+        </property>
+        <property generated="never" lazy="false" name="medicine" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="MEDICINE"/>
+        </property>
+        <property generated="never" lazy="false" name="dosage" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="DOSAGE"/>
+        </property>
+        <property generated="never" lazy="false" name="prescribedDate" optimistic-lock="true" type="java.util.Date" unique="false">
+            <column name="PRESCRIBED_DATE"/>
+        </property>
+        <property generated="never" lazy="false" name="instructions" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="INSTRUCTIONS"/>
+        </property>
+    </class>
+</hibernate-mapping>

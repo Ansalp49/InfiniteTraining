@@ -1,0 +1,5 @@
+INDEX VERSION 1.132
+D:\Users\ansalp\Downloads\Pharmacy\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2429203667.index
+\PharmacyClient\src\main\java
+D:\Users\ansalp\Downloads\Pharmacy\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2755657411.index
+\PharmacyClient\src\main\java

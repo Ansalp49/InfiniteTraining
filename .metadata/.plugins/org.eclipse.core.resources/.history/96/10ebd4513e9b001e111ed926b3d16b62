@@ -1,0 +1,516 @@
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
+
+<f:view>
+	<html>
+<head>
+<f:facet name="first">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</f:facet>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Sale</title>
+<script>
+	function calculateTotalPrice() {
+		console.log("JavaScript function is executed.");
+		var quantity = document.getElementById('form:quantity').value;
+		var price = document.getElementById('form:price').value;
+		var totalPrice = quantity * price;
+
+		document.getElementById('form:totalPrice').textContent = totalPrice;
+	}
+
+	function changeArrow() {
+		var idOrder = document.getElementById('form:idOrder');
+		var arr1 = document.getElementById('arr1');
+		var arr2 = document.getElementById('arr2');
+		if (idOrder.value === 'desc') {
+			arr1.style.display = 'none';
+		} else if (idOrder.value === 'asc') {
+			arr2.style.display = 'none';
+		} else {
+		}
+	}
+
+	function toggleForm() {
+		var form = document.getElementById("form");
+		form.style.display = (form.style.display === "none") ? "block" : "none";
+	}
+</script>
+
+<style>
+body {
+	font-family: monospace;
+	background-size: cover;
+	background-color: #5a7c8a;
+	font-size: 15px;
+}
+
+.alert {
+	color: red;
+	font-weight: bold;
+	text-shadow: 4px 3px 3px #ffffff;
+}
+
+.example2 {
+	padding: 6px;
+	padding-left: 40px;
+	font-size: 14px;
+	border: none;
+	width: 45%;
+	border-radius: 15px 0px 0px 15px;
+	background: #ffffff url("search.png") 8px 4px no-repeat;
+	background-size: 18px 20px;
+}
+
+.h1 {
+	color: #ffffff;
+	font-family: monospace;
+	margin-left: 510%;
+	font-size: 48px;
+}
+
+.inputText {
+	width: 100%;
+	padding: 5px 8px;
+	margin: 4px 0;
+	display: inline-block;
+	border-radius: 3px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+}
+
+.dataTable {
+	width: 225%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	padding: 1%;
+	background-color: rgba(255, 255, 255, 0.7);
+	text-align: center;
+	border: 3px solid #a6706c;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin-left: -70%;
+	font-weight: bold;
+}
+
+.dataTable th {
+	background-color: #753c38;
+	padding: 8px;
+	font-size: 17px;
+	text-align: center;
+	color: white;
+	font-family: Miriam Libre;
+	border: 1px solid #542b28;
+}
+
+.dataTable td {
+	padding: 4px;
+	font-size: 15px;
+	border: 1px solid #a6706c;
+}
+
+.dataTable tr:nth-child(even) {
+	background-color: rgba(117, 60, 56, 0.1);
+}
+
+.dataTable tr:hover {
+	background-color: rgba(117, 60, 56, 0.2);
+}
+
+.sortbutton {
+	color: white;
+	text-decoration: none;
+}
+
+.addbutton {
+	background-color: #28a6fa;
+	font-size: 14px;
+	border: none;
+	padding: 8px 16px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	color: #fff;
+}
+
+.addbutton:hover {
+	background-color: #2084c7;
+}
+
+.commandButton1 {
+	background-color: #f5f1a9;
+	color: #333;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.saleButton {
+	background-color: #fa3939;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	margin-left: 33%;
+	font-weight: bold;
+}
+
+.saleButton:hover {
+	background-color: #d62424;
+}
+
+.redirect {
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	font-weight: bold;
+}
+
+.redirect:hover {
+	background-color: #d62424;
+}
+
+.redirect:disabled {
+	background-color: #9c1010;
+}
+
+.viewButton {
+	background-color: #34eb3a;
+	color: #000000;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	margin-left: 18%;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.viewButton:hover {
+	background-color: #2eb832;
+}
+
+.back {
+	color: #ffffff;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+}
+
+.card {
+	transition: 0.3s;
+	width: auto;
+	padding: 5px;
+	height: auto;
+}
+
+.page {
+	text-decoration: none;
+	font-size: 18px;
+	font-family: System;
+}
+
+.example {
+	padding: 6px;
+	padding-left: 40px;
+	font-size: 14px;
+	border: none;
+	width: 45%;
+	background: #ffffff;
+	background-size: 18px 20px;
+}
+
+.searchbutton {
+	float: center;
+	width: 20%;
+	padding: 6px;
+	background: #2196F3;
+	color: white;
+	font-size: 14px;
+	border: 1px solid #b8c2d1;
+	border-radius: 0px 15px 15px 0px;
+	border-left: none;
+	cursor: pointer;
+}
+
+.searchbutton:hover {
+	background: #0b7dda;
+}
+
+.searchbutton2 {
+	float: center;
+	width: 15%;
+	padding: 4px;
+	background: #2196F3;
+	color: white;
+	font-size: 18px;
+	border: 1px solid #b8c2d1;
+	border-left: none;
+	cursor: pointer;
+	border-radius: 0px 4px 4px 0px;
+}
+
+.searchbutton2:hover {
+	background: #0b7dda;
+}
+
+.prescript {
+	background-color: #ffffff;
+	font-size: 17px;
+	font-family: Courier New;
+	padding: 12px;
+	margin-left: 10px;
+}
+
+.selectquantity {
+	font-size: 13px;
+	padding: 1px;
+}
+
+.centered-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.container1 {
+	padding: 10px;
+	width: 50%;
+	text-align: left;
+	font-family: Times New Roman;
+	font-weight: bold;
+	height: auto;
+	border-radius: 3px;
+}
+
+.container2 {
+	padding: 8px;
+	width: 50%;
+	text-align: left;
+	font-family: Times New Roman;
+	font-weight: bold;
+	height: auto;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 3px;
+	font-size: 14px;
+	margin-left: 20px;
+}
+</style>
+</head>
+
+<body>
+	<div style="display: inline-block; display: flex;">
+		<h:form>
+			<h:commandLink action="ShowMedicine" value="" styleClass="back">
+				<i style="font-size: 30px" class="fa">&#xf0a8;</i>
+			</h:commandLink>
+		</h:form>
+		<h1>
+			<strong><h:outputText value="Sale" styleClass="h1" /></strong>
+		</h1>
+	</div>
+
+	<h:form id="form" style="margin:auto;max-width:540px">
+		<center>
+			<div style="color: #000000;">
+				<br />
+				<h:outputText value="Enter Prescription Id (PS001,PS002,..)"
+					style="color: #b8b8b8;font-size: 15px;margin-left: 10px;" />
+				<br />
+				<h:inputText value="#{res.prescriptionId}" autocomplete="off"
+					styleClass="example2" />
+
+				<h:commandButton styleClass="searchbutton"
+					action="#{pharImpl.searchPrescription(res.prescriptionId)}"
+					actionListener="#{pharImpl.setShowNoRecordsFound(true)}"
+					value="Search" />
+				<br /> <br />
+				<div>
+					<h:panelGroup rendered="#{not empty searchPres}">
+						<h:panelGroup
+							rendered="#{empty pharImpl.showPrescription() and pharImpl.showNoRecordsFound}">
+							<div class="alert">
+								<h:outputText value="No Records Found!" />
+							</div>
+						</h:panelGroup>
+
+						<h:panelGroup
+							rendered="#{not empty pharImpl.showPrescription() and not pharImpl.showNoRecordsFound}">
+							<div style="display: inline-flex;">
+								<div class="container1">
+									<h:dataTable value="#{pharImpl.showPrescription()}" var="p"
+										styleClass="prescript" border="">
+										<h:column>
+											<h:outputText value="Prescription Id: #{p.prescriptionId}" />
+											<br />
+											<br />
+											<h:outputText value="Provider Id: #{p.providerid}" />
+											<br />
+											<br />
+											<h:outputText value="Recipent Id: #{p.recipentId}" />
+											<br />
+											<br />
+											<h:outputText value="Symptoms: #{p.symptoms}" />
+											<br />
+											<br />
+											<h:outputText value="Dosage: #{p.dosage}" />
+											<br />
+											<br />
+											<div style="font-weight: bold;">
+												<h:outputText value="Medicine: #{p.medicine}" />
+											</div>
+										</h:column>
+									</h:dataTable>
+								</div>
+								<div class="container2">
+									Medicine Name
+									<h:inputText value="#{medNameNew}" styleClass="inputText"
+										disabled="true" />
+									<br /> <br />
+									<h:outputLabel for="quantity">Quantity </h:outputLabel>
+									<h:inputText id="quantity" value="#{sales.quantity}"
+										onkeyup="calculateTotalPrice()" styleClass="inputText"
+										autocomplete="off" />
+									<h:message for="form:quantity" style="color:red" />
+									<br /> <br />
+									<h:outputLabel for="price">Price </h:outputLabel>
+									<h:inputText id="price" value="#{priceNew}" disabled="true"
+										onkeyup="calculateTotalPrice()" styleClass="inputText" />
+									<br /> <br />
+									<h:outputText value="Total Price " />
+									&nbsp;&nbsp; <span>&#8377;</span>
+									<h:outputText id="totalPrice" value="#{sales.totalPrice}"
+										rendered="#{sales.totalPrice ne null}" />
+									<br />
+									<div style="display: inline-block; display: flex;">
+										<h:commandButton action="#{controller.addSaleRecord(sales)}"
+											value="Sale" styleClass="saleButton" />
+										<!-- 	<h:commandButton action="ViewDetails" value="View"
+									onclick="validateForm();" styleClass="viewButton" />  -->
+									</div>
+								</div>
+							</div>
+							<h:dataTable id="table" value="#{impl.showMedicineFromPres()}"
+								var="p" border="1" styleClass="dataTable">
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Medicine Id" styleClass="header">
+											<h:commandLink action="#{pharImpl.sortByMedIdNew()}" value=""
+												styleClass="sortbutton">
+												<p style="display: inline; margin: 0;">&#129035;</p>
+											</h:commandLink>
+											<h:commandLink action="#{pharImpl.sortByMedIdNewDesc()}"
+												value="" styleClass="sortbutton">
+												<p style="display: inline; margin: 0;">&#129033;</p>
+											</h:commandLink>
+										</h:outputLabel>
+									</f:facet>
+									<h:outputText value="#{p.medId}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Medicine Name" styleClass="header" />
+									</f:facet>
+									<h:outputText value="#{p.medName}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Type" styleClass="header" />
+									</f:facet>
+									<h:outputText value="#{p.type}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Entry Date" styleClass="header" />
+									</f:facet>
+									<h:outputText value="#{p.entryDate.toString().substring(0,10)}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Mfg Date" styleClass="header" />
+									</f:facet>
+									<h:outputText value="#{p.mfgDate.toString().substring(0,10)}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Exp Date" styleClass="header" />
+									</f:facet>
+									<h:outputText id="exp"
+										value="#{p.expiryDate.toString().substring(0,10)}"
+										style="#{p.expiryWithinOneMonth or p.expired ? 'color: red;' : 'color: black;'}" />
+
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Quantity" styleClass="header" />
+									</f:facet>
+
+									<h:outputText id="QUANTITY" value="#{p.quantity}"
+										style="#{p.quantity lt 5 ? 'color: red;' : 'color: black;'}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Price" styleClass="header" />
+									</f:facet>
+									<h:outputText value="#{p.price}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputLabel value="Sale" styleClass="header" />
+									</f:facet>
+									<h:commandButton value="SALE" styleClass="redirect"
+										id="salebutton" onchange="toggleForm()"
+										action="#{impl.redirectToSaleMedicine(p.entryId,p.medId,p.medName,p.price)}"
+										disabled="#{p.quantity <= 0 or p.expiryWithinOneMonth or p.expired}"
+										style="#{p.quantity == 0 or p.expiryWithinOneMonth or p.expired ? 'background-color: #a8a8a8; cursor: not-allowed;' : 'background-color: #fac32a; cursor: pointer;'}" />
+
+								</h:column>
+							</h:dataTable>
+							<br />
+							<br />
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+			</div>
+		</center>
+	</h:form>
+
+</body>
+
+	</html>
+
+</f:view>

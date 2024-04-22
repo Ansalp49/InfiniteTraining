@@ -1,0 +1,525 @@
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
+
+<f:view>
+	<html>
+<head>
+<f:facet name="first">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+	<link rel="stylesheet"
+		href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</f:facet>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Sale</title>
+<script>
+	function validateNumericInput(event) {
+		var charCode = (event.which) ? event.which : event.keyCode;
+		if ((charCode >= 48 && charCode <= 57) || charCode == 8
+				|| charCode == 46) {
+			var inputValue = event.target.value || '';
+			if (inputValue.length < 4) {
+				return true;
+			}
+		}
+		return false;
+	}
+</script>
+
+<style>
+body {
+	font-family: monospace;
+	background-size: cover;
+	background-color: #222;
+	background-image: url("Background 1.jpg");
+	font-size: 15px;
+}
+
+.example2 {
+	padding: 6px;
+	padding-left: 40px;
+	font-size: 14px;
+	border: none;
+	width: 24%;
+	border-radius: 5px;
+	background: #ffffff url("search.png") 8px 4px no-repeat;
+	background-size: 18px 20px;
+	margin-bottom: 6px;
+}
+
+.h1 {
+	color: #ffffff;
+	font-family: monospace;
+	font-size: 48px;
+}
+
+.inputText {
+	width: 100%;
+	padding: 5px 8px;
+	margin: 4px 0;
+	display: inline-block;
+	border-radius: 3px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+}
+
+.dataTable {
+	width: 90%;
+	margin-top: 6px;
+	padding: 3%;
+	background-color: rgba(255, 255, 255, 0.7);
+	text-align: center;
+	border: 3px solid #a6706c;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	font-weight: bold;
+	border-collapse: collapse;
+}
+
+.dataTable th {
+	background-color: #753c38;
+	padding: 6px;
+	font-size: 15px;
+	text-align: center;
+	color: white;
+	font-family: Miriam Libre;
+	border: 1px solid #542b28;
+}
+
+.dataTable td {
+	font-size: 15px;
+	padding: 6px;
+	border: 1px solid #a6706c;
+}
+
+.dataTable tr:nth-child(even) {
+	background-color: rgba(117, 60, 56, 0.1);
+}
+
+.dataTable tr:hover {
+	background-color: rgba(117, 60, 56, 0.2);
+}
+
+.sortbutton {
+	color: white;
+	text-decoration: none;
+}
+
+.addbutton {
+	background-color: #28a6fa;
+	font-size: 14px;
+	border: none;
+	padding: 8px 16px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	color: #fff;
+}
+
+.addbutton:hover {
+	background-color: #2084c7;
+}
+
+.commandButton1 {
+	background-color: #f5f1a9;
+	color: #333;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.saleButton {
+	background-color: #fa3939;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	font-weight: bold;
+}
+
+.saleButton:hover {
+	background-color: #d62424;
+}
+
+.redirect {
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	font-weight: bold;
+	background-color: #fac32a;
+}
+
+.redirect:hover {
+	background-color: #d6a724;
+}
+
+.viewButton {
+	background-color: #34eb3a;
+	color: #000000;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	margin-left: 18%;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.viewButton:hover {
+	background-color: #2eb832;
+}
+
+.back {
+	color: #ffffff;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	margin-left: 10px;
+}
+
+.card {
+	transition: 0.3s;
+	width: auto;
+	padding: 5px;
+	height: auto;
+}
+
+.resetButton {
+	background-color: #e3e3e3;
+	color: #000000;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	display: inline-block;
+	font-size: 16px;
+	margin-left: 10px;
+	margin-top: 6px;
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.resetButton:hover {
+	background-color: #cccccc;
+}
+
+.searchbutton {
+	margin-top: 6px;
+	background: #2196F3;
+	color: #ffffff;
+	display: inline-block;
+	font-size: 16px;
+	text-align: center;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	padding: 10px 20px;
+}
+
+.searchbutton:hover {
+	background: #0b7dda;
+}
+
+.clearButton {
+	font-weight: bold;
+	padding: 5px;
+	background-color: #ffffff;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	margin-left: -23px;
+}
+
+.selectquantity {
+	font-size: 13px;
+	padding: 1px;
+}
+
+.centered-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.pagealign {
+	font-weight: bold;
+	font-family: Georgia;
+	margin-top: 6px;
+	margin-left: 76%;
+}
+
+.page {
+	border: none;
+	border-radius: 2px;
+	font-size: 18px;
+	font-family: System;
+	color: #ffffff;
+	padding: 6px 10px;
+	background-color: #750f0d;
+	margin-left: 6px;
+	font-size: 18px;
+	cursor: auto;
+}
+
+.error {
+	color: red;
+	background-color: #fcd4d5;
+	margin-top: 6px;
+	font-style: oblique;
+	white-space: pre-line;
+}
+
+.success {
+	color: #00b831;
+	font-size: 30px;
+	background-color: #87faa6;
+	width: 100%;
+}
+
+.increment {
+	text-decoration: none;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+	<h:form id="form1">
+		<h:commandLink action="#{controller.back()}" value=""
+			styleClass="back">
+			<i style="font-size: 30px" class="fa">&#xf0a8;</i>
+		</h:commandLink>
+	</h:form>
+
+	<h:form id="form" style="margin:auto;">
+		<center>
+			<strong><h:outputText value="Sale" styleClass="h1" /></strong> <br />
+			<br /> <br />
+
+			<h:dataTable id="table"
+				value="#{paginationDao.getMedicineList(entries.medName)}" var="p"
+				border="1" styleClass="dataTable">
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Medicine Id" styleClass="header">
+							<br />
+							<h:commandLink action="#{paginationDao.sorttedByMedIdDesc()}"
+								value="" style="margin-bottom: 4px;" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129033;</p>
+							</h:commandLink> 
+												&nbsp;&nbsp;
+												<h:commandLink action="#{paginationDao.sorttedByMedId()}"
+								style="margin-top: 4px;" value="" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129035;</p>
+							</h:commandLink>
+						</h:outputLabel>
+					</f:facet>
+					<h:outputText value="#{p.medId}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Medicine Name" styleClass="header">
+							<br />
+							<h:commandLink action="#{paginationDao.sorttedByMedNameDesc()}"
+								value="" style="margin-bottom: 4px;" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129033;</p>
+							</h:commandLink> 
+												&nbsp;&nbsp;
+												<h:commandLink action="#{paginationDao.sorttedByMedName()}"
+								style="margin-top: 4px;" value="" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129035;</p>
+							</h:commandLink>
+						</h:outputLabel>
+					</f:facet>
+					<h:outputText value="#{p.medName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Type" styleClass="header" />
+					</f:facet>
+					<h:outputText value="#{p.type}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Mfg Date" styleClass="header">
+							<br />
+							<h:commandLink action="#{paginationDao.sorttedByMfgDesc()}"
+								value="" style="margin-bottom: 4px;" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129033;</p>
+							</h:commandLink> 
+												&nbsp;&nbsp;
+												<h:commandLink action="#{paginationDao.sorttedByMfg()}"
+								style="margin-top: 4px;" value="" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129035;</p>
+							</h:commandLink>
+						</h:outputLabel>
+					</f:facet>
+					<h:outputText value="#{p.mfgDate.toString().substring(0,10)}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Exp Date" styleClass="header">
+							<br />
+							<h:commandLink action="#{paginationDao.sorttedByExpDesc()}"
+								value="" style="margin-bottom: 4px;" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129033;</p>
+							</h:commandLink> 
+												&nbsp;&nbsp;
+												<h:commandLink action="#{paginationDao.sorttedByExp()}"
+								style="margin-top: 4px;" value="" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129035;</p>
+							</h:commandLink>
+						</h:outputLabel>
+					</f:facet>
+					<h:outputText id="exp"
+						value="#{p.expiryDate.toString().substring(0,10)}"
+						style="#{p.expiryWithinOneMonth or p.expired ? 'color: red;' : 'color: black;'}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Avl Quantity" styleClass="header">
+							<br />
+							<h:commandLink action="#{paginationDao.sorttedByQuantityDesc()}"
+								value="" style="margin-bottom: 4px;" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129033;</p>
+							</h:commandLink> 
+												&nbsp;&nbsp;
+												<h:commandLink action="#{paginationDao.sorttedByQuantity()}"
+								style="margin-top: 4px;" value="" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129035;</p>
+							</h:commandLink>
+						</h:outputLabel>
+					</f:facet>
+
+					<h:outputText id="QUANTITY" value="#{p.quantity}"
+						style="#{p.quantity lt 5 ? 'color: red;' : 'color: black;'}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Price" styleClass="header">
+							<br />
+							<h:commandLink action="#{paginationDao.sorttedByPriceDesc()}"
+								value="" style="margin-bottom: 4px;" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129033;</p>
+							</h:commandLink> 
+												&nbsp;&nbsp;
+												<h:commandLink action="#{paginationDao.sorttedByPrice()}"
+								style="margin-top: 4px;" value="" styleClass="sortbutton">
+								<p style="display: inline; margin: 0;">&#129035;</p>
+							</h:commandLink>
+						</h:outputLabel>
+					</f:facet>
+					<h:outputText value="#{p.price}">
+						<f:convertNumber pattern="#,##0.00" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Quantity" styleClass="header" />
+					</f:facet>
+					<h:commandLink value="-" styleClass="increment"
+						style="#{p.quantity == 0 ? 'display:none;' :'display:inline-block;'}"
+						rendered="#{!p.expired}" disabled="#{p.quantity <= 0}"
+						action="#{impl.minusOneQuantity(paginationDao.getMedicineList(p.medName), p.entryId)}" />
+					<h:inputText value="#{p.saleQuantity}"
+						disabled="#{p.quantity <= 0}"
+						onkeypress="return validateNumericInput(event)" autocomplete="off"
+						rendered="#{!p.expired}"
+						style="width: 20%;#{p.quantity == 0 ? 'cursor: not-allowed;' :'cursor: pointer;'}" />
+					<h:outputText value="#{expired}" style="color: red;"
+						rendered="#{p.expired}" />
+					<h:commandLink value="+" styleClass="increment"
+						style="#{p.quantity == 0 ? 'display:none;' :'display:inline-block;'}"
+						disabled="#{p.quantity <= 0}" rendered="#{!p.expired}"
+						action="#{impl.plusOneQuantity(paginationDao.getMedicineList(p.medName), p.entryId)}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputLabel value="Total" styleClass="header" />
+					</f:facet>
+					<h:outputText value="#{p.price * p.saleQuantity}">
+						<f:convertNumber pattern="#,##0.00" />
+					</h:outputText>
+				</h:column>
+			</h:dataTable>
+			<br />
+			<h:outputText
+				value="#{medSearchError} #{quantityerror} #{prescriptionSoldError}"
+				styleClass="error" />
+
+			<h:panelGroup rendered="#{empty medSearchError}">
+				<div class="pagealign">
+					<h:commandButton value="first" action="#{paginationDao.pageFirst}"
+						styleClass="page" disabled="#{paginationDao.firstRow == 0}" />
+					&nbsp;
+					<h:commandButton value="<< " styleClass="page"
+						action="#{paginationDao.pagePrevious}"
+						disabled="#{paginationDao.firstRow == 0}" />
+					&nbsp;
+					<h:outputText value="Page #{paginationDao.currentPage}"
+						style="font-size: 18px;" />
+					&nbsp;
+					<h:commandButton value=">>" action="#{paginationDao.pageNext}"
+						styleClass="page"
+						disabled="#{paginationDao.firstRow + paginationDao.rowsPerPage >= paginationDao.totalRows}" />
+					&nbsp;
+					<h:commandButton value="last" action="#{paginationDao.pageLast}"
+						styleClass="page"
+						disabled="#{paginationDao.firstRow + paginationDao.rowsPerPage >= paginationDao.totalRows}" />
+				</div>
+
+				<br />
+				<br />
+				<h:commandButton
+					action="#{controller.addSaleRecord(paginationDao.getMedicineList(entries.medName))}"
+					value="Sale" styleClass="saleButton" id="sale" />
+			</h:panelGroup>
+
+		</center>
+	</h:form>
+
+</body>
+
+	</html>
+
+</f:view>

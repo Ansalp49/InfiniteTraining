@@ -1,0 +1,223 @@
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
+
+<f:view>
+	<html>
+<head>
+<f:facet name="first">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</f:facet>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSP Page</title>
+<script>
+	function calculateTotalPrice() {
+		console.log("JavaScript function is executed.");
+		var quantity = document.getElementById('form:quantity').value;
+		var price = document.getElementById('form:price').value;
+		var totalPrice = quantity * price;
+
+		document.getElementById('form:totalPrice').textContent = totalPrice;
+	}
+
+	function validateNumericInput(event) {
+		var charCode = (event.which) ? event.which : event.keyCode;
+		return (charCode >= 48 && charCode <= 57) || charCode == 8
+				|| charCode == 0;
+	}
+
+	function validateDoubleInput(event) {
+		var charCode = (event.which) ? event.which : event.keyCode;
+		return (charCode >= 48 && charCode <= 57) || charCode == 46
+				|| charCode == 8 || charCode == 0;
+	}
+
+	function validateForm() {
+		var providerId = document.getElementById('form:providerId').value;
+		var recipientId = document.getElementById('form:recipientId').value;
+		var prescriptionId = document.getElementById('form:prescriptionId').value;
+
+		// Check if any field is null or empty
+		if (!providerId || !recipientId || !prescriptionId ) {
+			alert('Please fill in all fields.');
+			return false;
+		}
+		return true;
+	}
+</script>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-size: cover;
+	background-color: #fff36b;
+	font-size: 15px;
+	color: #000000;
+}
+
+.h1 {
+	color: #000000;
+	font-family: Palatino Linotype;
+	text-align: center;
+}
+
+.inputText, .selectOneMenu, .inputTextarea {
+	width: 100%;
+	padding: 10px 16px;
+	margin: 8px 0;
+	display: inline-block;
+	border-radius: 4px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+}
+
+.commandButton1 {
+	background-color: #f5f1a9;
+	color: #333;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.saleButton {
+	background-color: #fa3939;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	margin-left: 42%;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.saleButton:hover {
+	background-color: #d62424;
+}
+
+.viewButton {
+	background-color: #34eb3a;
+	color: #000000;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 0;
+	margin-left: 30%;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.viewButton:hover {
+	background-color: #2eb832;
+}
+
+.back {
+	color: #272947;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 25px;
+	text-align: center;
+}
+
+.card {
+	transition: 0.3s;
+	width: 48%;
+	border: 3px solid #ffe600;
+	border-radius: 15px;
+	
+}
+
+.container {
+	padding: 2px 10px;
+}
+</style>
+</head>
+
+<body>
+	<div style="display: inline-block; display: flex;">
+		<h:form>
+			<h:commandLink action="ShowMedicine" value="" styleClass="back">
+				<i style="font-size: 30px" class="fa">&#xf0a8;</i>
+			</h:commandLink>
+		</h:form>
+		<h1>
+			<h:outputText value="Sale" styleClass="h1" />
+		</h1>
+
+	</div>
+	<div class="card">
+		<h:form id="form">
+			<div class="container">
+
+				Id :
+				<h:inputText value="#{medId}" styleClass="inputText inputTextarea"
+					style="cursor: default;" readonly="true" />
+				<br /> <br /> Name :
+				<h:inputText value="#{medName}" styleClass="inputText inputTextarea" />
+				<br /> <br />
+				<h:outputLabel for="quantity">
+				Quantity : </h:outputLabel>
+				<h:inputText id="quantity" value="#{sales.quantity}"
+					onkeyup="calculateTotalPrice()"
+					styleClass="inputText inputTextarea" />
+				<h:message for="form:quantity" style="color:red" />
+				<br /> <br />
+				<h:outputLabel for="price">
+				Price : </h:outputLabel>
+				<h:inputText id="price" value="#{price}"
+					onkeyup="calculateTotalPrice()"
+					styleClass="inputText inputTextarea" />
+				<br /> <br /> Provider Id :
+				<h:outputText value="(e.g. PROV001,PROV002,...)"
+					style="color:#c7c7c7" />
+				<h:inputText value="#{sales.providerId}"
+					styleClass="inputText inputTextarea" id="providerId" />
+				<h:message for="form:providerId" style="color:red" />
+				<br /> <br /> Recipient Id :
+				<h:outputText value="(e.g. IN0001,IN0002,...)" style="color:#c7c7c7" />
+				<h:inputText value="#{sales.patientId}"
+					styleClass="inputText inputTextarea" id="recipientId" />
+				<h:message for="form:recipientId" style="color:red" />
+				<br /> <br /> Prescription Id :
+				<h:outputText value="(e.g. P01,P002,P0002...)" style="color:#c7c7c7" />
+				<h:inputText value="#{sales.presId}"
+					styleClass="inputText inputTextarea" id="prescriptionId" />
+				<h:message for="form:prescriptionId" style="color:red" />
+				<br /> <br />
+				<h:outputText value="Total Price " />
+				&nbsp;&nbsp; <span>&#8377;</span>
+				<h:outputText id="totalPrice" value="#{sales.totalPrice}"
+					rendered="#{sales.totalPrice ne null}" />
+				<br /> <br />
+			</div>
+			<div style="display: inline-block; display: flex;">
+				<h:commandButton action="#{controller.addSaleRecord(sales)}"
+					onclick="validateForm();" value="Sale" styleClass="saleButton" />
+
+				<h:commandButton action="ViewDetails" value="View"
+					onclick="validateForm();" styleClass="viewButton" />
+			</div>
+		</h:form>
+	</div>
+</body>
+
+	</html>
+
+</f:view>

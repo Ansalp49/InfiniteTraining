@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Dec 6, 2023, 4:43:18 PM by Hibernate Tools 3.6.2.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="com.java.ejb.RecipientDetails" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="patient_enrollment">
+        <id name="recipientId" type="java.lang.String">
+            <column name="UHID"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="firstName" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="FIRSTNAME"/>
+        </property>
+        <property generated="never" lazy="false" name="lastName" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="LASTNAME"/>
+        </property>
+        <property generated="never" lazy="false" name="dob" optimistic-lock="true" type="java.util.Date" unique="false">
+            <column name="DOB"/>
+        </property>
+        <property generated="never" lazy="false" name="Gender" optimistic-lock="true" unique="false">
+            <column name="GENDER"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.java.ejb.Gender</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+        <property generated="never" lazy="false" name="userName" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="USERNAME"/>
+        </property>
+        <property generated="never" lazy="false" name="Phoneno" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PHONENO"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="EMAIL"/>
+        </property>
+        <property generated="never" lazy="false" name="status" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="STATUS"/>
+        </property>
+        <property generated="never" lazy="false" name="address" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="ADDRESS"/>
+        </property>
+        <property generated="never" lazy="false" name="medHistory" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="MEDHISTORY"/>
+        </property>
+        <property generated="never" lazy="false" name="countryCode" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="COUNTRYCODE"/>
+        </property>
+        <property generated="never" lazy="false" name="city" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="CITY"/>
+        </property>
+        <property generated="never" lazy="false" name="state" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="STATE"/>
+        </property>
+        <property generated="never" lazy="false" name="postalCode" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="POSTALCODE"/>
+        </property>
+        <property generated="never" lazy="false" name="country" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="COUNTRY"/>
+        </property>
+        <property generated="never" lazy="false" name="permanentAddress" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PERMANENTADDRESS"/>
+        </property>
+        <property generated="never" lazy="false" name="permanentCity" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PERMANENTCITY"/>
+        </property>
+        <property generated="never" lazy="false" name="permanentState" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PERMANENTSTATE"/>
+        </property>
+        <property generated="never" lazy="false" name="permanentPostalCode" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PERMANENTPOSTALCODE"/>
+        </property>
+        <property generated="never" lazy="false" name="permanentCountry" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PERMANENTCOUNTRY"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Nov 5, 2023, 7:17:42 PM by Hibernate Tools 3.6.2.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class dynamic-insert="false" dynamic-update="false" mutable="true" name="com.java.ejb.MedicineEntry" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="MEDICINES">
+        <id name="entryId" type="int">
+            <column name="ENTRYID"/>
+            <generator class="assigned"/>
+        </id>
+        <property access="field" generated="never" lazy="false" name="medId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="MEDID"/>
+        </property>
+        <property generated="never" lazy="false" name="pharmId" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="PHARM_ID"/>
+        </property>
+        <property generated="never" lazy="false" name="medName" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="MEDNAME"/>
+        </property>
+        <property generated="never" lazy="false" name="type" optimistic-lock="true" type="java.lang.String" unique="false">
+            <column name="TYPE"/>
+        </property>
+        <property generated="never" lazy="false" name="quantity" optimistic-lock="true" type="int" unique="false">
+            <column name="QUANTITY"/>
+        </property>
+        <property generated="never" lazy="false" name="entryDate" optimistic-lock="true" type="java.util.Date" unique="false">
+            <column name="ENTRYDATE"/>
+        </property>
+        <property generated="never" lazy="false" name="mfgDate" optimistic-lock="true" type="java.util.Date" unique="false">
+            <column name="MFGDATE"/>
+        </property>
+        <property generated="never" lazy="false" name="expiryDate" optimistic-lock="true" type="java.util.Date" unique="false">
+            <column name="EXPIRYDATE"/>
+        </property>
+        <property generated="never" lazy="false" name="price" optimistic-lock="true" type="double" unique="false">
+            <column name="PRICE"/>
+        </property>
+    </class>
+</hibernate-mapping>

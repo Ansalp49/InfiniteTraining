@@ -1,0 +1,243 @@
+package com.java.ejb;
+
+import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+import javax.naming.NamingException;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+public class PharmacyImpl implements PharmacyDao {
+
+	SessionFactory sf;
+	Session session;
+
+	private int desiredQuantity;
+
+	private String medName;
+
+	public String getMedName() {
+		return medName;
+	}
+
+	public void setMedName(String medName) {
+		this.medName = medName;
+	}
+
+	public int getDesiredQuantity() {
+		return desiredQuantity;
+	}
+
+	public void setDesiredQuantity(int desiredQuantity) {
+		this.desiredQuantity = desiredQuantity;
+	}
+
+	public String addMedicineEjb(MedicineEntry entry) throws NamingException {
+		PharmaBeanRemote remote = RemoteHelper.lookupRemoteStatelessPharmacy();
+		remote.addMedicine(entry);
+		return "ShowMedicine.jsp?faces-redirect=true";
+	}
+
+	public String addSaleHistoryEjb(MedicineSales sales) throws NamingException {
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+		String medId = (String) sessionMap.get("medId");
+		String medName = (String) sessionMap.get("medName");
+		String priceStr = (String) sessionMap.get("price");
+		int entryId = (int) sessionMap.get("entryId");
+
+		deductQuantity(sales.getQuantity(), entryId);
+
+		Double price = Double.parseDouble(priceStr);
+		Double totalprice = price * sales.getQuantity();
+
+		sales.setMedId(medId);
+		sales.setMedName(medName);
+		sales.setPrice(price);
+		sales.setTotalPrice(totalprice);
+
+		PharmaBeanRemote remote = RemoteHelper.lookupRemoteStatelessPharmacy();
+		remote.addSaleHistory(sales);
+		return "ShowMedicine.jsp?faces-redirect=true";
+	}
+
+	public Double calculateTotalPrice(int quantity, double price) {
+		return quantity * price;
+	}
+
+	public void deductQuantity(int desiredQuantity, int entryId) {
+		System.out.println("entryId:" + entryId);
+
+		MedicineEntry medicines = searchMedicine(entryId);
+		System.out.println("existingSales:" + medicines);
+		if (medicines != null) {
+			if (medicines.getQuantity() >= desiredQuantity) {
+				System.out.println("test: " + desiredQuantity);
+				medicines.setQuantity(medicines.getQuantity() - desiredQuantity);
+
+				SessionFactory sf = SessionHelper.getConnection();
+				Session session = sf.openSession();
+				Transaction transaction = session.beginTransaction();
+				session.update(medicines);
+				transaction.commit();
+
+			}
+		}
+
+	}
+
+	public String redirectToSaleMedicineNew() {
+		return "SaleMedicine.jsp?faces-redirect=true";
+	}
+
+	public String redirectToSaleMedicine(int entryId, String medId, String medName, double price) {
+		System.out.println("Inside redirect to alemedicine");
+		System.out.println("Medicine Id " + medId);
+
+		sf = SessionHelper.getConnection();
+		session = sf.openSession();
+
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		sessionMap.put("medId", medId);
+		sessionMap.put("medName", medName);
+		sessionMap.put("price", price);
+		sessionMap.put("entryId", entryId);
+
+		return "SaleMedicine.jsp?faces-redirect=true";
+	}
+
+	@Override
+	public List<MedicineEntry> showMedicineDao() throws ParseException {
+		sf = SessionHelper.getConnection();
+		session = sf.openSession();
+		Criteria cr = session.createCriteria(MedicineEntry.class);
+		cr.addOrder(Order.asc("expiryDate"));
+		List<MedicineEntry> entryList = cr.list();
+		return entryList;
+
+	}
+
+	@Override
+	public MedicineEntry searchMedicine(int entryId) {
+		sf = SessionHelper.getConnection();
+		session = sf.openSession();
+		Criteria cr = session.createCriteria(MedicineEntry.class);
+		cr.add(Restrictions.eq("entryId", entryId));
+		MedicineEntry medent = (MedicineEntry) cr.uniqueResult();
+		System.out.println("entry:" + entryId);
+		return medent;
+	}
+
+//	public void medNameLocaleCodeChanged(ValueChangeEvent e) {
+//		this.localCode = e.getNewValue().toString();
+//		System.out.println("Updated Value is  " + this.localCode);
+//	}
+
+	public List<MedicineEntry> showMedName(int firstRow, int rowCount) {
+		sf = SessionHelper.getConnection();
+		session = sf.openSession();
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		String searchMed = "";
+		if (sessionMap.get("searchMed") != null) {
+			System.out.println("Found...");
+			searchMed = (String) sessionMap.get("searchMed");
+			Criteria cr = session.createCriteria(MedicineEntry.class);
+			cr.add(Restrictions.eq("medName", searchMed));
+			cr.setFirstResult(firstRow);
+			cr.setMaxResults(rowCount);
+			System.out.println(firstRow);
+			System.out.println(rowCount);
+			System.out.println(cr.list());
+			return cr.list();
+
+		}
+		return null;
+	}
+
+	public Criteria searchByMedName(String medName) {
+		System.out.println("Hitting");
+		sf = SessionHelper.getConnection();
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		sessionMap.put("searchMed", medName);
+		session = sf.openSession();
+		Criteria cr = session.createCriteria(MedicineEntry.class);
+		cr.add(Restrictions.like("medName", medName + "%"));
+//		 List<MedicineEntry> MedList = cr.list();
+		return cr;
+	}
+
+	public List<MedicineEntry> getListOfMedicine(int firstRow, int rowCount) {
+
+		SessionFactory sf = SessionHelper.getConnection();
+		Session session = sf.openSession();
+		Criteria criteria = session.createCriteria(MedicineEntry.class);
+		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		if (sessionMap.get("searchMed") != null) {
+			String medNameStr = (String) sessionMap.get("searchMed");
+
+			List<MedicineEntry> cdList = null;
+
+			session.beginTransaction();
+			criteria = searchByMedName(medNameStr);
+			
+			// sorting by medId
+			if (orderbyMedId.equals("asc")) {
+				System.out.println("order: " + orderbyMedId);
+				criteria.addOrder(Order.asc("medId"));
+			} else if (orderbyMedId.equals("desc")) {
+				criteria.addOrder(Order.desc("medId"));
+			} else {
+				System.out.println("Done");
+			}
+			
+			criteria.setFirstResult(firstRow);
+			criteria.setMaxResults(rowCount);
+			System.out.println("From Pagination " + firstRow);
+			System.out.println("From Pagination Count   " + rowCount);
+			List<MedicineEntry> claimList = criteria.list();
+
+			System.out.println(claimList);
+			sessionMap.put("claimList", claimList);
+			return claimList;
+		}
+
+		return null;
+	}
+
+	public int countRows() {
+		SessionFactory sf = SessionHelper.getConnection();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			Criteria criteria = session.createCriteria(MedicineEntry.class);
+			return criteria.list().size();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	// SORTING...
+	static String orderbyMedId = "sort";
+
+	public String sortByMedId() {
+		Map<String, Object> sessionMap=FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		System.out.println("sort..");
+		if (orderbyMedId.length() == 4) {
+			orderbyMedId = "asc";
+		} else if (orderbyMedId.equals("asc")) {
+			orderbyMedId = "desc";
+		}
+		sessionMap.put("orderbyId", orderbyMedId);
+		return "ShowMedicine.jsp?faces-redirect=true";
+		
+	}
+	
+}
